@@ -1,0 +1,151 @@
+/* chat.css */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: sans-serif;
+}
+
+#chat {
+  position: relative;
+  min-height: 100%;
+}
+
+/* ajusta a área de mensagens para não ficar atrás do inputBar */
+#messages {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  bottom: calc(50px + env(safe-area-inset-bottom)); /* igual à altura do pill */
+  padding: 10px;
+  background: #e5ddd5;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/* bolhas e animação igual ao antes */
+.bubble {
+  max-width: 85%;
+  margin: 5px 0;
+  padding: 8px 12px;
+  border-radius: 16px;
+  word-wrap: break-word;
+  display: flex;
+  flex-direction: column;
+  animation: slideIn 0.3s ease-out forwards;
+}
+
+/* Bolha especial para botões - ocupa mais espaço */
+.bubble.system.has-buttons {
+  max-width: 95%; /* aumenta para quase toda a largura */
+}
+
+.bubble.user   { align-self: flex-start; background: #dcf8c6; }
+.bubble.system { align-self: flex-end;   background: #fff; }
+
+.label {
+  font-size: 0.75rem;
+  font-weight: bold;
+  color: #555;
+  margin-bottom: 4px;
+}
+.time {
+  font-size: 0.65rem;
+  color: #666;
+  margin-top: 4px;
+  align-self: flex-end;
+}
+@keyframes slideIn {
+  from { opacity:0; transform: translateY(10px); }
+  to   { opacity:1; transform: translateY(0);  }
+}
+
+/* barra fixa no rodapé, só serve de "container" para centralizar o pill */
+#inputBar {
+  position: fixed;
+  bottom: 0; left: 0; width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 0px;
+  background: #e5ddd5;
+  z-index: 1000;
+  padding-bottom: calc(env(safe-area-inset-bottom) + 8px);
+}
+
+/* O verdadeiro "pill" */
+#inputContainer {
+  display: flex;
+  width: 96%;
+  max-width: 600px;     /* ajusta no desktop */
+  height: 50px;         /* altura do pill */
+  background: #fff;
+  border-radius: 25px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  overflow: hidden;     /* children vão ficar restritos ao pill */
+}
+
+/* input preenche 90% do espaço total do pill */
+#inputContainer input {
+  flex: 8;
+  height: 100%;
+  padding: 0 16px;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 1rem;
+}
+
+/* botão preenche os 10% restantes */
+#inputContainer button {
+  flex: 2;
+  height: 100%;
+  border: none;
+  background: #128C7E;
+  color: #fff;
+  cursor: pointer;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* tweaks para telas bem pequenas */
+@media (max-width: 400px) {
+  #messages {
+    bottom: calc(45px + env(safe-area-inset-bottom));
+  }
+  #inputContainer {
+    height: 45px;
+  }
+  .bubble {
+    font-size: 0.9rem;
+    padding: 6px 10px;
+  }
+  #inputContainer input,
+  #inputContainer button {
+    font-size: 0.9rem;
+  }
+}
+
+.buttons-container {
+  display: flex;
+  flex-direction: column; /* empilha verticalmente */
+  gap: 8px;               /* espaço entre cada botão */
+  margin-top: 8px;
+  width: 100%;            /* garante que use toda a largura da bolha */
+}
+
+.chat-btn {
+  width: 100%;            /* ocupa toda a largura do container */
+  padding: 12px;
+  border: none;
+  border-radius: 4px;
+  background-color: #007BFF; /* azul "padrão bootstrap" */
+  color: #fff;
+  cursor: pointer;
+  text-align: center;        /* centraliza o texto */
+  font-weight: bold;
+  font-size: 1rem;
+  min-height: 48px;          /* altura mínima para melhor toque */
+}
